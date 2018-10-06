@@ -3,7 +3,8 @@ import pandas as pd
 import numpy as np
 import csv
 
-
+batchSize=32
+bufferSize=256
 
 data=pd.read_csv("algebra.csv",header=None)
 
@@ -36,10 +37,10 @@ def inputFunction(filepath,shuffle=False,repeat=1):
     dataset=(tf.data.TextLineDataset(filepath).map(decode))
 
     if(shuffle):
-        dataset=dataset.shuffle(buffer_size=256)
+        dataset=dataset.shuffle(buffer_size=bufferSize)
 
     dataset=dataset.repeat(repeat)
-    dataset=dataset.batch(32)
+    dataset=dataset.batch(batchSize)
 
     iterator=dataset.make_one_shot_iterator()
 
